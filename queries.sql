@@ -171,16 +171,17 @@ ORDER BY visit_count DESC
 LIMIT 1;
 
 -- Who was Maisy Smith's first visit?
-SELECT v.name
+SELECT vt.name
 FROM visits v
 JOIN vets vt ON vt.id = v.vet_id
 WHERE v.visit_date = (SELECT MIN(visit_date) FROM visits WHERE vet_id = vt.id)
   AND vt.name = 'Maisy Smith';
 
 -- Details for the most recent visit: animal information, vet information, and date of visit.
-SELECT a.name AS animal_name, v.name AS vet_name, v.visit_date
+SELECT a.name AS animal_name, vt.name AS vet_name, v.visit_date
 FROM visits v
 JOIN animals a ON a.id = v.animal_id
+JOIN vets vt ON vt.id = v.vet_id
 WHERE v.visit_date = (SELECT MAX(visit_date) FROM visits);
 
 -- How many visits were with a vet that did not specialize in that animal's species?
