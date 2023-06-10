@@ -35,4 +35,28 @@ ALTER TABLE animals
   ADD COLUMN species_id INTEGER REFERENCES species(id),
   ADD COLUMN owner_id INTEGER REFERENCES owners(id);
 
+-- Create the vets table
+CREATE TABLE vets (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT,
+  age INTEGER,
+  date_of_graduation DATE
+);
+
+-- Create the specializations join table
+CREATE TABLE specializations (
+  vet_id INTEGER,
+  species_id INTEGER,
+  FOREIGN KEY (vet_id) REFERENCES vets(id),
+  FOREIGN KEY (species_id) REFERENCES species(id)
+);
+
+-- Create the visits join table
+CREATE TABLE visits (
+  animal_id INTEGER,
+  vet_id INTEGER,
+  visit_date DATE,
+  FOREIGN KEY (animal_id) REFERENCES animals(id),
+  FOREIGN KEY (vet_id) REFERENCES vets(id)
+);
 
